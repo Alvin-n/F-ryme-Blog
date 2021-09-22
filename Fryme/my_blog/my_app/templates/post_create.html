@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<!-- Introduction -->
+<div class="intro" style="background-image: url('{{ settings_queryset.background_image.url  }}')">
+    <div class="container">
+        <div class="units-row">
+            <!-- <div class="unit-10">
+                <img class="img-intro" src="{% static 'asserts/img/avatar.png' %}" alt="">
+            </div> -->
+            <div class="unit-90">
+                <p class="p-intro">Create Your Own Post!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="content">
+    <div class="container">
+        <div class="post">
+            <div class="in-content">
+                <form method="POST" action='{% url "post_create_page" %}' enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{form.as_p}}
+                    <input type='submit' value='Save Post'>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>  
+
+{% endblock %}

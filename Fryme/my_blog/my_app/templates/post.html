@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="intro" style="background-image: url('{{ post_detail_queryset.head_image.url }}')">
+    <div class="container">
+        <div class="units-row">
+            <!-- <div class="unit-10">
+                <img class="img-intro" src="{}" alt="">
+            </div> -->
+            <div class="unit-90">
+                <p class="p-intro">{{post_detail_queryset.name}}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="content">
+    <div class="container">
+        <!-- Post -->
+        <div class="post">
+            <!-- Heading -->
+            <a href="#"><h1>{{post_detail_queryset.subtitle}}</h1></a>
+            <hr>
+            <div class="in-content">
+                <p>
+                {{post.text}} 
+                </p>
+
+                {% for image in post_detail_images %}
+                <img src = '{{image.images.url}}', width = '800px', height= '500px'>
+                <br>
+                <br>
+                {% endfor %}
+            </div>
+            <div class="foot-post">
+                <div class="units-row">
+                    <div class="unit-100">
+                        <strong>Tags:</strong>
+                        <a href="#">{{post_detail_queryset.tags}}</a>,
+
+                    </div>
+                    <div class="unit-100">
+                        <strong>COMMENTS:</strong> 
+                        <a href="#">3</a></br>
+                        Posted by
+                        <a href="{% url 'post_page' post_id=post_detail_queryset.id %}">{{post_detail_queryset.user_id}}</a>
+                        on {{post_detail_queryset.date}}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+{% endblock %}

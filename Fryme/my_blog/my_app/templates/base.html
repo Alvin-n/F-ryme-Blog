@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+    <head>
+        <title>F 'ryme by Allwine</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="Saturn is free PSD &amp; HTML template by @flamekaizar">
+        <meta name="author" content="Afnizar Nur Ghifari">
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="stylesheet" href="{% static 'asserts/css/kube.min.css' %}" />
+        <link rel="stylesheet" href="{% static 'asserts/css/font-awesome.min.css' %}"/>
+        <link rel="stylesheet" href="{% static 'asserts/css/styles.css' %}"/>
+        <link rel="stylesheet" href="{% static 'asserts/css/custom.min.css' %}" />
+        <link rel="shortcut icon" href="{% static 'asserts/img/favicon.png' %}" />
+        <link href="http://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet" type="text/css">
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet" type="text/css">
+    </head>
+
+    <body>
+        <!-- Navigation -->
+        <div class="main-nav">
+            <div class="container">
+                <header class="group top-nav">
+                    <nav class="navbar logo-w navbar-left" >
+                        <a class="logo" href="{% url 'home_page' %}">F 'ryme</a>
+                    </nav>
+                    <div class="navigation-toggle" data-tools="navigation-toggle" data-target="#navbar-1">
+                        <span class="logo">Saturn</span>
+                    </div>
+                    <nav id="navbar-1" class="navbar item-nav navbar-right">
+                        {% if request.user.is_authenticated %}
+                        <ul>
+                            {% for i in navbar_queryset %}
+                            <li class="active"><a href="{{i.url}}">{{i.title}}</a></li>
+                            {% endfor %}
+                        </ul>
+                        <ul>
+                            <li class="active"><a href="{%url 'post_create_page' %}">Post Create</a></li>
+                        </ul>
+                        <ul>
+                            <li class="active"><a href="{%url 'logout_page' %}">Log Out</a></li>
+                        </ul>
+                        {% else %}
+                            <ul class="navbar-nav ms-auto py-4 py-lg-0">
+                            <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'login_page' %}">Log in</a></li>
+                            </ul>
+                            <ul>
+                                <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'register_page' %}">Register</a></li>
+                            </ul>
+                        {% endif %}
+                    </nav>
+                </header>
+            </div>
+        </div>
+
+ 
+
+        {% block content %}{% endblock %}
+
+        <footer>
+            <div class="container">
+                <div class="units-row">
+                    <!-- <div class="unit-50">
+                        <button class="btn btn-black"><i class="fa fa-arrow-left"></i> PREVIOUS</button>
+                    </div> -->
+                    <div class="unit-50">
+                        <ul class="social list-flat right">
+                            {% for j in footer_queryset %}
+                            <a href="{{j.logo_url}}"><img src = "{{j.logo_image.url}}" width="50" height="50"></a>
+                            <!-- <li><a href="mailto:afnizarhilmi@gmail.com"><i class="fa fa-send"></i></a></li>
+                            <li><a href="http://twitter.com/flamekaizar"><i class="fa fa-twitter"></i></a></li>
+                            <li><a href="http://dribbble.com/flamekaizar"><i class="fa fa-dribbble"></i></a></li>
+                            <li><a href="http://behance.com/flamekaizar"><i class="fa fa-behance"></i></a></li> -->
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                <p class="text-centered foot-cp">
+                    <a href="#">handcrafted by Allwine</a>
+                </p>
+            </div>
+        </footer>
+    
+        <!-- Javascript -->
+        <script src="{% static 'asserts/js/jquery.min.js' %}"></script>
+        <script src="{% static 'asserts/js/kube.min.js' %}"></script>
+    </body>
+    </html>

@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<!-- Introduction -->
+<div class="intro" style="background-image: url('{{ about_queryset.background_image.url }}')">
+    <div class="container">
+        <div class="units-row">
+            <!-- <div class="unit-10">
+                <img class="img-intro" src="{% static 'asserts/img/avatar.png' %}" alt="">
+            </div> -->
+            <div class="unit-90">
+                <p class="p-intro">{{about_queryset.title}}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="content">
+    <div class="container">
+        <div class="post">
+            <h1>{{about_queryset.subtitle}}</h1>
+            <div class="in-content">
+                <p>
+                {{about_queryset.text}}
+                </p>
+            </div>
+        </div>
+    </div>
+</div>  
+{% endblock %}

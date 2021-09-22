@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<!-- Introduction -->
+	<div class="intro" style="background-image: url('{{ settings_queryset.background_image.url }}')">
+		<div class="container">
+			<div class="units-row">
+				<!-- <div class="unit-10">
+					<img class="img-intro" src="{% static 'asserts/img/avatar.png' %}" alt="">
+				</div> -->
+				<div class="unit-90">
+					<p class="p-intro">{{settings_queryset.title}}</p>
+				</div>
+			</div>
+		</div>
+	</div>
+<!-- Content -->
+	<div class="content">
+		<div class="container">
+			<!-- Post -->
+			<div class="post">
+				<!-- Heading -->
+				{% for post in post_queryset %}
+				<a href="{% url 'post_page' post_id=post.id %}"><h1>{{post.name}}</h1></a>
+				<hr>
+				<div class="in-content">
+					<p>
+					{{post.subtitle}} . . .
+					</p>
+					<a class="read-more" href="{% url 'post_page' post_id=post.id %}">Read more</a>
+				</div>
+				<div class="foot-post">
+					<div class="units-row">
+					    <div class="unit-100">
+					    	<strong>Tags:</strong>
+					    	<a href="#">{{post.tags}}</a>,
+					    </div>
+					    <div class="unit-100">
+					    	<strong>COMMENTS:</strong> 
+					    	<a href="#">3</a>
+					    </div>
+					</div>
+				</div>
+				{% endfor %}
+			</div>
+			<div class="unit-50">
+				<button class="btn btn-black"><i class="fa fa-arrow-left"></i> PREVIOUS</button>
+			</div>
+			<!-- /post -->
+		</div>
+	</div>
+	{% endblock %}

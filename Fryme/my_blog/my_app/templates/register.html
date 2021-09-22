@@ -1,0 +1,26 @@
+{%extends 'base.html'%}
+{%load static%}
+{%block content%}
+
+<!-- Introduction -->
+<div class="intro" style="background-image: url('{{ settings_queryset.background_image.url }}')">
+    <div class="container">
+        <div class="units-row">
+            <!-- <div class="unit-10">
+                <img class="img-intro" src="{% static 'asserts/img/avatar.png' %}" alt="">
+            </div> -->
+            <div class="unit-90">
+                <p class="p-intro">{{settings_queryset.title}}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<form method="POST", action='{% url "register_page" %}'>
+    {% csrf_token %}
+    {{form.as_p}}
+
+    <input type='submit', value='Register'>
+</form>
+
+{% endblock %}
