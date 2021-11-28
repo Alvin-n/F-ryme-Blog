@@ -4,10 +4,17 @@ from django.db import models
 from django.forms import forms
 from my_app.models import NavbarModel
 from django.shortcuts import redirect, render
+
+from my_app.backends import UserModel
 from .models import AboutModel, ContactModel, Footer, NavbarModel, PostImageModel, PostModel, Settings
 from .forms import ContactForm, PostCreateForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from .forms import LoginForm, RegisterForm
+from django.contrib.auth import views as auth_views
+from django.urls import reverse_lazy
+from django.views import generic
 
 # Create your views here.
 
@@ -70,6 +77,7 @@ def contact_view(request):
         
         else:
             context['form'] = form
+            messages.error(request, form.errors)
             return render(request, 'contact.html', context)
     
     return render(request, 'contact.html', context)
@@ -90,6 +98,7 @@ def post_create_view(request):
             return redirect('home_page')
         
         else:
+            messages.error(request, form.errors)
             context['form'] = form
             return render(request, 'post_create.html', context)
 
@@ -107,48 +116,63 @@ def post_view(request, post_id):
 
     return render(request, 'post.html', context)
 
-def register_view(request):
-    context = {}
-    form = UserCreationForm()
-    settings_queryset = Settings.objects.all().first
-    context['settings_queryset'] = settings_queryset
-
-    if request.method == 'POST':
-        form = UserCreationForm(request.POST)
-        
-        if form.is_valid():
-            form.save()
-            return redirect('login_page')
-
-        else:
-            context['form'] = form
-            form = UserCreationForm()
-            return render(request, 'register.html', context)
-
-    else:
-        context['form'] = form
-        form = UserCreationForm()
-    
-    return render(request, 'register.html', context)
-
-def login_view(request):
-    context = {}
-    settings_queryset = Settings.objects.all().first
-    context['settings_queryset'] = settings_queryset
-    
-    username = request.POST.get("username")
-    raw_password = request.POST.get("password")
-    user = authenticate(username=username, password=raw_password)
-    
-    if user:
-        login(request, user)
-        return redirect('home_page')
-
-    else:
-        context['error_message'] = 'error!'
-        return render(request, 'login.html', context)
 
 def logout_view(request):
     auth.logout(request)
     return redirect('login_page')
 
+
+class LoginView(auth_views.LoginView):
+    form_class = LoginForm
+    template_name = 'login.html'
+
+
+class RegisterView(generic.CreateView):
+    form_class = RegisterForm
+    template_name = 'register.html'
+    success_url = reverse_lazy('login_page')
+    if UserModel.is_active == False :
+        pass
+        
+
+
+# def register_view(request):
+#     context = {}
+#     form = UserCreationForm()
+#     settings_queryset = Settings.objects.all().first
+#     context['settings_queryset'] = settings_queryset
+
+#     if request.method == 'POST':
+#         form = UserCreationForm(request.POST)
+        
+#         if form.is_valid():
+#             form.save()
+#             return redirect('login_page')
+
+#         else:
+#             context['form'] = form
+#             messages.error(request, form.errors)
+#             return render(request, 'register.html', context)
+
+#     else:
+#         context['form'] = form
+#         form = UserCreationForm()
+    
+#     return render(request, 'register.html', context)
+
+# def login_view(request):
+#     context = {}
+#     settings_queryset = Settings.objects.all().first
+#     context['settings_queryset'] = settings_queryset
+    
+#     username = request.POST.get("username")
+#     raw_password = request.POST.get("password")
+#     user = authenticate(username=username, password=raw_password)
+    
+#     if user:
+#         login(request, user)
+#         return redirect('home_page')
+
+#     else:
+#         context['error_message'] = 'error!'
+#         return render(request, 'login.html', context)

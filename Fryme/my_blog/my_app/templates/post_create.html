@@ -22,6 +22,11 @@
                 <form method="POST" action='{% url "post_create_page" %}' enctype="multipart/form-data">
                     {% csrf_token %}
                     {{form.as_p}}
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div>{message}}</div>
+                        {% endfor %}
+                    {% endif %}
                     <input type='submit' value='Save Post'>
                 </form>
             </div>

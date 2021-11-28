@@ -38,7 +38,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'my_app.apps.MyAppConfig',
-    'widget_tweaks'
+    'widget_tweaks',
+    'celery',
+    'django_celery_beat',
+    'ckeditor',
+   
 ]
 
 MIDDLEWARE = [
@@ -79,11 +83,11 @@ WSGI_APPLICATION = 'my_blog.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': BASE_DIR / 'db.new_test',
     }
 }
 
-
+AUTH_USER_MODEL = 'my_app.CustomUser'
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
@@ -131,3 +135,16 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'nasibov.alvin@gmail.com'
+EMAIL_HOST_PASSWORD = 'Paris4121'
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+
+
+AUTHENTICATION_BACKENDS = ['my_app.backends.EmailBackend']
+
+LOGIN_REDIRECT_URL = "/"

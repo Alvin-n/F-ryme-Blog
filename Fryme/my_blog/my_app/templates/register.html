@@ -16,11 +16,21 @@
     </div>
 </div>
 
-<form method="POST", action='{% url "register_page" %}'>
+<form action="{% url 'register_page' %}" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" id="submit">Register</button>
+  </form>
+
+<!-- <form method="POST", action='{% url "register_page" %}'>
     {% csrf_token %}
     {{form.as_p}}
-
+    {% if messages %}
+        {% for message in messages %}
+             <div>{{message}}</div>
+        {% endfor %}
+    {% endif %}
     <input type='submit', value='Register'>
-</form>
+</form> -->
 
 {% endblock %}

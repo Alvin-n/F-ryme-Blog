@@ -20,7 +20,7 @@
         <!-- Post -->
         <div class="post">
             <!-- Heading -->
-            <a href="#"><h1>{{post_detail_queryset.subtitle}}</h1></a>
+            <a href="#"><h1>{{post_detail_queryset.subtitle}}{{post_detail_queryset.text|safe}}</h1></a>
             <hr>
             <div class="in-content">
                 <p>
